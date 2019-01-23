@@ -1,0 +1,151 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "",
+  "projects": {
+    "ekklesia": {
+      "root": "apps/ekklesia/",
+      "sourceRoot": "apps/ekklesia/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "styleext": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/ekklesia",
+            "index": "apps/ekklesia/src/index.html",
+            "main": "apps/ekklesia/src/main.ts",
+            "polyfills": "apps/ekklesia/src/polyfills.ts",
+            "tsConfig": "apps/ekklesia/tsconfig.app.json",
+            "assets": [
+              "apps/ekklesia/src/favicon.ico",
+              "apps/ekklesia/src/assets"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "apps/ekklesia/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/ekklesia/src/environments/environment.ts",
+                  "with": "apps/ekklesia/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ekklesia:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ekklesia:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ekklesia:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/ekklesia/tsconfig.app.json",
+              "apps/ekklesia/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "apps/ekklesia/jest.config.js",
+            "tsConfig": "apps/ekklesia/tsconfig.spec.json",
+            "setupFile": "apps/ekklesia/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "ekklesia-e2e": {
+      "root": "apps/ekklesia-e2e",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/builders:cypress",
+          "options": {
+            "cypressConfig": "apps/ekklesia-e2e/cypress.json",
+            "tsConfig": "apps/ekklesia-e2e/tsconfig.e2e.json",
+            "devServerTarget": "ekklesia:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ekklesia:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/ekklesia-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false,
+      "versionMismatch": false
+    },
+    "defaultCollection": "@nrwl/schematics",
+    "packageManager": "npm"
+  },
+  "schematics": {
+    "@nrwl/schematics:application": {
+      "style": "scss"
+    },
+    "@nrwl/schematics:library": {
+      "style": "scss"
+    },
+    "@nrwl/schematics:component": {
+      "styleext": "scss"
+    }
+  },
+  "defaultProject": "ekklesia"
+}
